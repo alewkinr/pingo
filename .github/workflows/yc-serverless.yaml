@@ -7,11 +7,6 @@ on:
   pull_request:
     branches:
     - main
-  push:
-    branches:
-      - feature/gh-actions
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
 
 
 jobs:
@@ -27,5 +22,5 @@ jobs:
           runtime: 'golang117'
           entrypoint: 'main.Handler'
           memory: '256Mb'
-          environment: ENVIRONMENT=development,SPACE_HOST=https://space.cloud.mts.ru,SPACE_DEBUG_CHANNEL=4anH4q38FKzj,SPACE_TOKEN=${{ secrets.SPACE_TOKEN }}
+          environment: ENVIRONMENT=production,SPACE_HOST=https://space.cloud.mts.ru,SPACE_DEBUG_CHANNEL=4anH4q38FKzj,SPACE_TOKEN=${{ secrets.SPACE_TOKEN }}
           exclude: '.git/**,.github/**,.gitignore'
