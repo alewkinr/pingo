@@ -5,7 +5,11 @@ name: Yandex.Cloud CI/CD pipeline
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   pull_request:
-    branches: [ main ]
+    branches:
+    - main
+  push:
+    branches:
+      - feature/gh-actions
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -14,27 +18,14 @@ jobs:
   upload-serveless-function:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master
       - name: Deploy Function
-        id: sls-func
-        uses: yc-actions/yc-sls-function@v2
+        uses: goodsmileduck/yandex-serverless-action@v1
         with:
-          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
-          folder-id: 'b1gralifrlhh1ata3enc'
-          function-name: 'pingo'
-          entrypoint: 'main.Handler'
-          environment: |
-            ENVIRONMENT=development
-            SPACE_HOST=https://space.cloud.mts.ru
-            SPACE_DEBUG_CHANNEL=4anH4q38FKzj
-            SPACE_TOKEN=${{ secrets.SPACE_TOKEN }}
-          tags: ${{ GITHUB_SHA::6 }}
-          include: |
-            **/*.go
-            go.mod
-            go.sum
-          exclude: ""
+          token: ${{ secrets.YC_TOKEN }}
+          function_id: ${{ secrets.YC_FUNCTION_ID }}
           runtime: 'golang117'
+          entrypoint: 'main.Handler'
           memory: '256Mb'
-
-
-
+          environment: ENVIRONMENT=development,SPACE_HOST=https://space.cloud.mts.ru,SPACE_DEBUG_CHANNEL=4anH4q38FKzj,SPACE_TOKEN=${{ secrets.SPACE_TOKEN }}
+          exclude: '.git/**,.github/**,.gitignore'
