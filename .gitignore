@@ -198,3 +198,4 @@ GitHub.sublime-settings
 .env
 vendor/
 .idea
+/pingo-bot-sa.json
