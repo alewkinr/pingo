@@ -1,35 +1,15 @@
 package main
 
 import (
-	"context"
 	"time"
 
 	"github.com/alewkinr/pingo/internal/config"
 	"github.com/alewkinr/pingo/internal/pingo"
-	"github.com/alewkinr/pingo/pkg/log"
-	"github.com/alewkinr/pingo/pkg/message"
-	"github.com/alewkinr/pingo/pkg/senders/email"
-	"github.com/alewkinr/pingo/pkg/senders/slack"
-	"github.com/alewkinr/pingo/pkg/senders/space"
-	"github.com/alewkinr/pingo/pkg/senders/telegram"
-	"github.com/alewkinr/pingo/pkg/trigger"
+	"github.com/alewkinr/pingo/pkg/sender/email"
+	"github.com/alewkinr/pingo/pkg/sender/slack"
+	"github.com/alewkinr/pingo/pkg/sender/space"
+	"github.com/alewkinr/pingo/pkg/sender/telegram"
 )
-
-// Handler – обработчик для запросов Yandex.Cloud Functions
-func Handler(ctx context.Context, r *trigger.TimerTriggerRequest) (*FunctionResponse, error) {
-	settings := config.MustInitConfig()
-	logger := log.SetUpLogging()
-
-	senders := makeSenders(settings)
-	pinger := pingo.NewPingo(logger, senders...)
-
-	pinger.Ping(message.DailyReminder)
-	return &FunctionResponse{}, nil
-}
-
-func main() {
-	_, _ = Handler(context.Background(), &trigger.TimerTriggerRequest{})
-}
 
 // makeSenders — создаем отправщиков пинг-сообщения
 func makeSenders(settings *config.Config) []pingo.Sender {

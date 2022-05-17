@@ -20,7 +20,7 @@ jobs:
           token: ${{ secrets.YC_TOKEN }}
           function_id: ${{ secrets.YC_FUNCTION_ID }}
           runtime: 'golang117'
-          entrypoint: 'main.Handler'
+          entrypoint: 'serverless.Handler'
           memory: '256Mb'
           environment: ENVIRONMENT=production,SPACE_HOST=https://space.cloud.mts.ru,SPACE_DEBUG_CHANNEL=4anH4q38FKzj,SPACE_TOKEN=${{ secrets.SPACE_TOKEN }}
           exclude: '.git/**,.github/**,.gitignore'

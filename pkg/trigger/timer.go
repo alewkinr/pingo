@@ -2,8 +2,9 @@ package trigger
 
 import "time"
 
-// TimerTriggerRequest — тело запроса, если функцию вызывает таймер
-type TimerTriggerRequest struct {
+// TimerRequest — тело запроса для main.Handler
+// если вызов приходит из Yandex.Cloud Functions в виде триггера Timer
+type TimerRequest struct {
 	Messages []struct {
 		EventMetadata struct {
 			EventId   string    `json:"event_id"`
