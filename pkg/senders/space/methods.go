@@ -4,9 +4,15 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/pkg/errors"
 	"net/http"
+
+	"github.com/pkg/errors"
 )
+
+// Name — геттер для названия
+func (space *API) Name() string {
+	return space.clientName
+}
 
 // SendMessage — отправляем сообщение стандартной структуры
 func (space *API) SendMessage(ctx context.Context, channelID, message string) error {

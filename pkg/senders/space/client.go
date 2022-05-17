@@ -4,15 +4,21 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"net/http"
+	"time"
+
 	"github.com/go-pkgz/requester"
 	"github.com/go-pkgz/requester/middleware"
 	"github.com/pkg/errors"
-	"net/http"
-	"time"
 )
+
+// name — навзание системы для которой клиент
+const name = "Jet Brains Space"
 
 // API — клиент для работы с API Space
 type API struct {
+	// clientName — навазние клиента
+	clientName string
 	// baseURL — базовый URL до API
 	baseURL string
 	// rq — HTTP клиент для работы с API
@@ -33,7 +39,8 @@ func WithTimeout(t time.Duration) Option {
 func NewClient(spaceHost string, token string, options ...Option) *API {
 	const requesterTimeout = time.Second * 5
 	api := API{
-		baseURL: spaceHost + "/api/http",
+		clientName: name,
+		baseURL:    spaceHost + "/api/http",
 		rq: requester.New(
 			http.Client{Timeout: requesterTimeout},
 			middleware.JSON,

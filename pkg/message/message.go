@@ -5,3 +5,5 @@ var DailyReminder = NewTemplate(
 	"1YfRmd1QlGjI",
 	"Доброе утро ☕️\nСегодня у нас текстовый дейли, ответы принимаются в треде этой записи.\nФормат:\n- Что было вчера\n- Что планируется сегодня\n- Какие есть блокеры\n\nХорошего дня ✨",
 )
+
+// TODO: support any channel in msg templates

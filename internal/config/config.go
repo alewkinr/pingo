@@ -9,8 +9,8 @@ type Config struct {
 	// Environment — окружение в котором запущено приложение
 	Environment Environment `required:"true" envconfig:"ENVIRONMENT"`
 
-	// Space – конфигурация Jet Brains Space
-	Space *Space
+	// Notify – конфигурация для нотификаций
+	Notify *Notify
 }
 
 // InitConfig возвращает конфиг
