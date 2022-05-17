@@ -199,3 +199,4 @@ GitHub.sublime-settings
 vendor/
 .idea
 /pingo-bot-sa.json
+/templates.yaml

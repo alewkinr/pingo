@@ -1,0 +1,20 @@
+# Версия pingo API
+version: '1'
+
+# Список шаблонов, для отправки
+templates:
+  # Название шаблона
+  send-mail-template:
+    # Пункт назначения для отправляемого сообщения
+    destination: slack:C019G231HTP
+    # Текст отправляемого сообщения
+    text: |
+      Hello world!
+      I'm pingo, text me if you have any problems ✨
+
+
+  send-telegram-template:
+    destination: telegram:-123456?parseMode=HTML
+    text: |
+      Hello world!
+      I'm pingo, I will help you here ✨
