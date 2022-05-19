@@ -24,9 +24,9 @@ func NewPingo(l *logrus.Logger, senders ...Sender) *Pingo {
 }
 
 // Ping — отправить пинг-сообщение
-func (p Pingo) Ping(message *message.Template) {
+func (p Pingo) Ping(ctx context.Context, message *message.Template) {
 	for _, sender := range p.senders {
-		sendError := sender.SendMessage(context.Background(), message.Channel(), message.Text())
+		sendError := sender.SendMessage(ctx, message.Channel(), message.Text())
 		if sendError != nil {
 			p.logger.WithFields(logrus.Fields{
 				"sender": sender.Name(),

@@ -18,6 +18,6 @@ func Handler(ctx context.Context, r *trigger.TimerRequest) (struct{}, error) {
 	senders := makeSenders(settings)
 	pinger := pingo.NewPingo(logger, senders...)
 
-	pinger.Ping(message.DailyReminder)
+	pinger.Ping(ctx, message.DailyReminder)
 	return struct{}{}, nil
 }
