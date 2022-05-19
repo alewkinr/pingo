@@ -34,7 +34,7 @@ func (s Email) Name() string {
 }
 
 // SendMessage — отправка сообщения
-// channelID — mailto:"John Wayne"<john@example.org>?subject=test-subj&from="Notifier"<notify@example.org>
-func (s Email) SendMessage(ctx context.Context, channelID, message string) error {
-	return s.rq.Send(ctx, channelID, message)
+// destination — mailto:"John Wayne"<john@example.org>?subject=test-subj&from="Notifier"<notify@example.org>
+func (s Email) SendMessage(ctx context.Context, destination, message string) error {
+	return s.rq.Send(ctx, destination, message)
 }

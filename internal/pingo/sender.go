@@ -7,5 +7,5 @@ type Sender interface {
 	// Name — геттер названия отправщика
 	Name() string
 	// SendMessage – метод для отправки сообщения
-	SendMessage(ctx context.Context, channelID, message string) error
+	SendMessage(ctx context.Context, destination, message string) error
 }

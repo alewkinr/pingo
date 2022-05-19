@@ -15,8 +15,8 @@ func (space *API) Name() string {
 }
 
 // SendMessage — отправляем сообщение стандартной структуры
-func (space *API) SendMessage(ctx context.Context, channelID, message string) error {
-	url := fmt.Sprintf("/chats/channels/%s/messages", channelID)
+func (space *API) SendMessage(ctx context.Context, destination, message string) error {
+	url := fmt.Sprintf("/chats/channels/%s/messages", destination)
 	payload := struct {
 		Text string `json:"text"`
 	}{
