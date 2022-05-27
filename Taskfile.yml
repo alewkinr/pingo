@@ -1,0 +1,11 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - go fmt ./...
+      - go vet ./...
+      - go test ./...
+      - golangci-lint run -c .golangci.yaml

@@ -9,8 +9,11 @@ type Config struct {
 	// Environment — окружение в котором запущено приложение
 	Environment Environment `required:"true" envconfig:"ENVIRONMENT"`
 
-	// Space – конфигурация Jet Brains Space
-	Space *Space
+	// Notify – конфигурация для нотификаций
+	Notify *Notify
+
+	// TemplatesConfig — конфигурация шаблонов, полученная из файла
+	TemplatesConfig *TemplatesConfig
 }
 
 // InitConfig возвращает конфиг
@@ -27,5 +30,7 @@ func MustInitConfig() *Config {
 	if err != nil {
 		panic(err)
 	}
+
+	cfg.TemplatesConfig = mustParseTemplatesConfig()
 	return cfg
 }
