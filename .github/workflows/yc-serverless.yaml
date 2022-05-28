@@ -3,10 +3,9 @@ name: Yandex.Cloud CI/CD pipeline
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push tags
-  push:
-    tags:
-      - *
+  # Triggers the workflow on release publish
+  release:
+    types: [published]
 
 
 jobs:

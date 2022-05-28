@@ -4,8 +4,18 @@ version: '3'
 
 tasks:
   default:
+    desc: Запускаем стандартные утилиты
     cmds:
       - go fmt ./...
       - go vet ./...
       - go test ./...
       - golangci-lint run -c .golangci.yaml
+
+  config:upload:
+    desc: Загружаем файл конфигурации на S3
+    vars:
+      AWS_CLI_PATH: /Users/alewkin/Library/Python/3.8/bin/aws
+      TEMPLATES_CONFIG_FILE: templates-production.yaml
+      CONFIG_FILENAME: templates.yaml
+    cmds:
+     - exec {{.AWS_CLI_PATH}} --profile geo-s3 --endpoint-url=https://geo.s3mts.ru:443 s3 cp {{.TEMPLATES_CONFIG_FILE}} s3://test/{{.CONFIG_FILENAME}} --acl=public-read
