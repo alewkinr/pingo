@@ -12,6 +12,9 @@ type Config struct {
 	// Notify – конфигурация для нотификаций
 	Notify *Notify
 
+	// RemoteConfigURL — URL для скачивания конфигурации шаблонов
+	RemoteConfigURL string `envconfig:"REMOTE_CONFIG_URL"`
+
 	// TemplatesConfig — конфигурация шаблонов, полученная из файла
 	TemplatesConfig *TemplatesConfig
 }
@@ -31,6 +34,14 @@ func MustInitConfig() *Config {
 		panic(err)
 	}
 
-	cfg.TemplatesConfig = mustParseTemplatesConfig()
+	cfg.TemplatesConfig = NewTemplatesConfig()
+
+	if cfg.RemoteConfigURL != "" {
+		cfg.TemplatesConfig.MustInitRemote(cfg.RemoteConfigURL)
+	}
+
+	if cfg.RemoteConfigURL == "" {
+		cfg.TemplatesConfig.MustInitLocal()
+	}
 	return cfg
 }
