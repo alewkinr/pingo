@@ -7,6 +7,10 @@ on:
   release:
     types: [published]
 
+  # Triggers the workflow on push to CI/CD config branch
+  push:
+    branches:
+      - feature/actions-config
 
 jobs:
   upload-serveless-function:
