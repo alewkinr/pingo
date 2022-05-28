@@ -7,14 +7,14 @@ import "time"
 type TimerRequest struct {
 	Messages []struct {
 		EventMetadata struct {
-			EventId   string    `json:"event_id"`
+			EventID   string    `json:"event_id"`
 			EventType string    `json:"event_type"`
 			CreatedAt time.Time `json:"created_at"`
-			CloudId   string    `json:"cloud_id"`
-			FolderId  string    `json:"folder_id"`
+			CloudID   string    `json:"cloud_id"`
+			FolderID  string    `json:"folder_id"`
 		} `json:"event_metadata"`
 		Details struct {
-			TriggerId string `json:"trigger_id"`
+			TriggerID string `json:"trigger_id"`
 		} `json:"details"`
 	} `json:"messages"`
 }
