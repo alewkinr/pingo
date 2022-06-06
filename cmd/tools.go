@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	neturl "net/url"
@@ -12,8 +12,8 @@ import (
 	"github.com/alewkinr/pingo/pkg/sender/telegram"
 )
 
-// makeSenders — встраиваем отправщики пинг-сообщений
-func makeSenders(settings *config.Config) map[pingo.Template]pingo.Sender {
+// MakeSenders — встраиваем отправщики пинг-сообщений
+func MakeSenders(settings *config.Config) map[pingo.Template]pingo.Sender {
 	clients := make(map[pingo.Template]pingo.Sender, 0)
 
 	if !settings.Notify.SpaceSettings.IsEmpty() {

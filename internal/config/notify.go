@@ -17,11 +17,11 @@ type SMTP struct {
 	// Host — SMTP хост
 	Host string `envconfig:"SMTP_HOST"`
 	// Port — SMTP порт
-	Port int `envconfig:"SMTP_PORT"`
+	Port int `envconfig:"SMTP_PORT" validate:"required_with=Host"`
 	// Username — пользователь SMTP-сервера
-	Username string `envconfig:"SMTP_USERNAME"`
+	Username string `envconfig:"SMTP_USERNAME" validate:"required_with=Host"`
 	// Password — пароль от SMTP сервера
-	Password string `envconfig:"SMTP_PASSWORD"`
+	Password string `envconfig:"SMTP_PASSWORD" validate:"required_with=Host"`
 }
 
 // IsEmpty — проверяем, что SMTP настройки пустые
@@ -34,7 +34,7 @@ type Space struct {
 	// Host — адрес до инсталляции
 	Host string `envconfig:"SPACE_HOST"`
 	// Token — токен доступа к API
-	Token string `envconfig:"SPACE_TOKEN"`
+	Token string `envconfig:"SPACE_TOKEN" validate:"required_with=Host"`
 }
 
 // IsEmpty — проверяем, что Space настройки пустые

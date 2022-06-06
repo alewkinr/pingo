@@ -2,8 +2,8 @@ package pingo
 
 // Template — структура, описывающая шаблон
 type Template struct {
-	Destination string `yaml:"destination"`
-	Text        string `yaml:"text"`
+	Destination string `yaml:"destination" validate:"required"`
+	Text        string `yaml:"text" validate:"required"`
 }
 
 // GetDestination – геттер пункта назначения сообщения
