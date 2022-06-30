@@ -1,20 +1,18 @@
 package config
 
 import (
+	"github.com/alewkinr/pingo/pkg/validation"
 	"github.com/kelseyhightower/envconfig"
 )
 
 // Config описывает структуру конфига
 type Config struct {
 	// Environment — окружение в котором запущено приложение
-	Environment Environment `required:"true" envconfig:"ENVIRONMENT"`
-
-	// Notify – конфигурация для нотификаций
-	Notify *Notify
-
+	Environment Environment `envconfig:"ENVIRONMENT" validate:"required,oneof=development staging production"`
 	// RemoteConfigURL — URL для скачивания конфигурации шаблонов
-	RemoteConfigURL string `envconfig:"REMOTE_CONFIG_URL"`
-
+	RemoteConfigURL string `envconfig:"REMOTE_CONFIG_URL" validate:"omitempty,url"`
+	// Notify – конфигурация для нотификаций
+	Notify *Notify `validate:"required"`
 	// TemplatesConfig — конфигурация шаблонов, полученная из файла
 	TemplatesConfig *TemplatesConfig
 }
@@ -41,7 +39,15 @@ func MustInitConfig() *Config {
 	}
 
 	if cfg.RemoteConfigURL == "" {
-		cfg.TemplatesConfig.MustInitLocal()
+		cfg.TemplatesConfig.MustInitLocal("./templates.yaml")
 	}
+
+	// валидируем конфиг
+	v := validation.NewPlayground()
+	validationErr := v.Validate(cfg)
+	if validationErr != nil {
+		panic(validationErr)
+	}
+
 	return cfg
 }

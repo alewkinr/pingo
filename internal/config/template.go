@@ -13,16 +13,14 @@ import (
 )
 
 const (
-	// configFileName — название для файла конфигурации с шаблонами
-	configFileName = "templates.yaml"
 	// supportedAPIVersion — поддерживаемая версия API
 	supportedAPIVersion = "1"
 )
 
 // TemplatesConfig — схема конфигурации шаблонов
 type TemplatesConfig struct {
-	Version   string                    `yaml:"version"`
-	Templates map[string]pingo.Template `yaml:"templates"`
+	Version   string                    `yaml:"version" validate:"required"`
+	Templates map[string]pingo.Template `yaml:"templates" validate:"required"`
 }
 
 // NewTemplatesConfig — конструктор конфигурации шаблонов
@@ -30,9 +28,25 @@ func NewTemplatesConfig() *TemplatesConfig {
 	return &TemplatesConfig{}
 }
 
+// InitLocal — парсим шаблоны для отправки сообщений из ЛОКАЛЬНОГО файла-конфига или паникуем
+func (cfg *TemplatesConfig) InitLocal(configFile string) error {
+	filepath, getAbsPathErr := path.Abs(configFile)
+	if getAbsPathErr != nil {
+		return fmt.Errorf("parse absolute path to templates config file: %s", getAbsPathErr.Error())
+	}
+
+	yamlConfigFile, readYamlConfigFileErr := ioutil.ReadFile(filepath)
+	if readYamlConfigFileErr != nil {
+		return fmt.Errorf("read yaml templates config file: %s", readYamlConfigFileErr.Error())
+	}
+
+	return cfg.parseConfig(yamlConfigFile)
+}
+
 // MustInitLocal — парсим шаблоны для отправки сообщений из ЛОКАЛЬНОГО файла-конфига или паникуем
-func (cfg *TemplatesConfig) MustInitLocal() {
-	filepath, getAbsPathErr := path.Abs("./" + configFileName)
+// TODO: откзааться от паникующих функций
+func (cfg *TemplatesConfig) MustInitLocal(configFile string) {
+	filepath, getAbsPathErr := path.Abs(configFile)
 	if getAbsPathErr != nil {
 		panic("parse absolute path to templates config file: " + getAbsPathErr.Error())
 	}
@@ -73,7 +87,22 @@ func (cfg *TemplatesConfig) MustInitRemote(remoteURL string) {
 	cfg.mustParseConfig(body)
 }
 
+// parseConfig — парсим шаблоны из конфигурации или паникуем
+func (cfg *TemplatesConfig) parseConfig(yamlConfig []byte) error {
+	unmarshalErr := yaml.Unmarshal(yamlConfig, &cfg)
+	if unmarshalErr != nil {
+		return fmt.Errorf("unmarshal templates config file: %s", unmarshalErr.Error())
+	}
+
+	if cfg.Version != supportedAPIVersion {
+		return fmt.Errorf("api version %s is not supported, must be %s", cfg.Version, supportedAPIVersion)
+	}
+
+	return nil
+}
+
 // mustParseConfig — парсим шаблоны из конфигурации или паникуем
+// TODO: отказаться от паникующих функций
 func (cfg *TemplatesConfig) mustParseConfig(yamlConfig []byte) {
 	unmarshalErr := yaml.Unmarshal(yamlConfig, &cfg)
 	if unmarshalErr != nil {
