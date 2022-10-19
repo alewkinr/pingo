@@ -13,7 +13,7 @@ on:
       - feature/actions-config
 
 jobs:
-  upload-serveless-function:
+  upload-daily-function:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -26,4 +26,19 @@ jobs:
           entrypoint: 'serverless.Handler'
           memory: '256Mb'
           environment: ENVIRONMENT=production,REMOTE_CONFIG_URL=https://static.geo.s3mts.ru/test/templates.yaml,SPACE_HOST=https://space.cloud.mts.ru,SPACE_TOKEN=${{ secrets.SPACE_TOKEN }},TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}
+          exclude: '.git/**,.github/**,.gitignore'
+
+  upload-archreview-function:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: deploy
+        uses: goodsmileduck/yandex-serverless-action@v1
+        with:
+          token: ${{ secrets.YC_TOKEN }}
+          function_id: ${{ secrets.YC_ARCHREVIEW_FUNCTION_ID }}
+          runtime: 'golang117'
+          entrypoint: 'serverless.Handler'
+          memory: '256Mb'
+          environment: ENVIRONMENT=production,REMOTE_CONFIG_URL=https://static.geo.s3mts.ru/test/arch-templates.yaml,SPACE_HOST=https://space.cloud.mts.ru,SPACE_TOKEN=${{ secrets.SPACE_TOKEN }},TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}
           exclude: '.git/**,.github/**,.gitignore'
