@@ -25,7 +25,7 @@ jobs:
           runtime: 'golang117'
           entrypoint: 'serverless.Handler'
           memory: '256Mb'
-          environment: ENVIRONMENT=production,REMOTE_CONFIG_URL=https://static.geo.s3mts.ru/test/templates.yaml,SPACE_HOST=https://space.cloud.mts.ru,SPACE_TOKEN=${{ secrets.SPACE_TOKEN }},TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}
+          environment: ENVIRONMENT=production,REMOTE_CONFIG_URL=https://static.geo.s3mts.ru/test/templates.yaml,SPACE_HOST=https://space.cloud.mts.ru,SPACE_TOKEN=${{ secrets.SPACE_TOKEN }},TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }},ROCKETCHAT_HOST=https://mm.mts.ru,ROCKETCHAT_TOKEN=${{ secrets.TELEGRAM_TOKEN }},ROCKETCHAT_USER_ID=${{ secrets.ROCKETCHAT_USER_ID }}
           exclude: '.git/**,.github/**,.gitignore'
 
   upload-archreview-function:
