@@ -89,7 +89,7 @@ func (space *API) parseDestination(destination string) (string, error) {
 	}
 
 	if u.Scheme != scheme {
-		return "", fmt.Errorf("схема %s не поддерживается, должно быть указано space", u.Scheme)
+		return "", fmt.Errorf("схема %s не поддерживается, должно быть указано %s", u.Scheme, scheme)
 	}
 
 	return u.Opaque, nil

@@ -3,6 +3,7 @@ module github.com/alewkinr/pingo
 go 1.17
 
 require (
+	github.com/badkaktus/gorocket v0.1.3
 	github.com/go-pkgz/notify v0.1.0
 	github.com/go-pkgz/requester v0.0.4
 	github.com/go-playground/validator/v10 v10.11.0
@@ -21,6 +22,7 @@ require (
 	github.com/go-pkgz/repeater v1.1.3 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
+	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/gorilla/css v1.0.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
