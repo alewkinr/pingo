@@ -7,6 +7,7 @@ import (
 	"github.com/alewkinr/pingo/internal/config"
 	"github.com/alewkinr/pingo/internal/pingo"
 	"github.com/alewkinr/pingo/pkg/sender/email"
+	"github.com/alewkinr/pingo/pkg/sender/rocket"
 	"github.com/alewkinr/pingo/pkg/sender/slack"
 	"github.com/alewkinr/pingo/pkg/sender/space"
 	"github.com/alewkinr/pingo/pkg/sender/telegram"
@@ -23,6 +24,15 @@ func MakeSenders(settings *config.Config) map[pingo.Template]pingo.Sender {
 		templates := listTemplatesBySender(settings.TemplatesConfig.Templates, "space")
 		for _, tmpl := range templates {
 			clients[tmpl] = spaceAPI
+		}
+	}
+
+	if !settings.Notify.RocketChatSettings.IsEmpty() {
+		rocketChatAPI := rocket.NewClient(settings.Notify.RocketChatSettings.Host, settings.Notify.RocketChatSettings.UserID, settings.Notify.RocketChatSettings.Token)
+
+		templates := listTemplatesBySender(settings.TemplatesConfig.Templates, "rocket")
+		for _, tmpl := range templates {
+			clients[tmpl] = rocketChatAPI
 		}
 	}
 

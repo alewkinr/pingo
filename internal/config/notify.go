@@ -10,6 +10,8 @@ type Notify struct {
 	TelegramToken string `envconfig:"TELEGRAM_TOKEN"`
 	// EmailSettings — настройки для уведомлений по Email
 	EmailSettings *SMTP
+	// RocketChatSettings — настройки для уведомлений в RocketChat
+	RocketChatSettings *RocketChat
 }
 
 // SMTP — настройки SMTP сервера
@@ -40,4 +42,19 @@ type Space struct {
 // IsEmpty — проверяем, что Space настройки пустые
 func (s Space) IsEmpty() bool {
 	return s == Space{}
+}
+
+// RocketChat — конфигурация для работы с RocketChat
+type RocketChat struct {
+	// Host — адрес до инсталляции
+	Host string `envconfig:"ROCKETCHAT_HOST"`
+	// Token — токен доступа к API
+	Token string `envconfig:"ROCKETCHAT_TOKEN" validate:"required_with=Host"`
+	// UserID — пользователь для авторизации
+	UserID string `envconfig:"ROCKETCHAT_USER_ID" validate:"required_with=Host"`
+}
+
+// IsEmpty — проверяем, что RocketChat настройки пустые
+func (s RocketChat) IsEmpty() bool {
+	return s == RocketChat{}
 }
