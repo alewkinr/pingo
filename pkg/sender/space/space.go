@@ -107,12 +107,8 @@ func (space *API) SendMessage(ctx context.Context, destination, message string) 
 		return parseDestErr
 	}
 
-	url := fmt.Sprintf("/chats/channels/%s/messages", channelID)
-	payload := struct {
-		Text string `json:"text"`
-	}{
-		message,
-	}
+	url := "/chats/messages/send-message"
+	payload := NewSendMessageRequest(message, channelID)
 
 	body, marshalBodyErr := json.Marshal(payload)
 	if marshalBodyErr != nil {
